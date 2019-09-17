@@ -6,6 +6,31 @@
   height: 100%;
 }
 
+.root_menu_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.root_menu_item {
+  flex-basis: 100%;
+  padding: 50px 50px;
+  margin: 0 16px;
+  background-color: #FFF;
+  border-radius: 15px;
+  box-shadow: 0 2px 17px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  user-select: none;
+  font-size: 36px;
+  line-height: 50px;
+
+  &:hover {
+    box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
 .container a {
   font-size: 1.4rem;
 }

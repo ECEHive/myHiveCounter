@@ -12,8 +12,20 @@ export default class Home extends Component<Props> {
   render () {
     return (
       <div className={styles.container}>
-        <h2>Home</h2>
-        <Link to={routes.COUNTER}>to Counter</Link>
+        <div className={styles.root_menu_container}>
+          <div className={styles.root_menu_item}>
+            <i className="fas fa-3x fa-clipboard-check"/><br/>
+            Checkout
+          </div>
+          <div className={styles.root_menu_item}>
+            <i className="fas fa-3x fa-warehouse"/><br/>
+            Inventory
+          </div>
+          <div className={styles.root_menu_item}>
+            <i className="fas fa-3x fa-flask"/><br/>
+            Hive Lab
+          </div>
+        </div>
       </div>
     );
   }

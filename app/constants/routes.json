@@ -1,4 +1,6 @@
 {
   "HOME": "/",
-  "INVENTORY": "/inventory"
+  "INVENTORY": "/inventory",
+  "WORKBENCH_RENTAL": "/workbench_rental",
+  "USER_MANAGEMENT": "/user_management"
 }

@@ -9,27 +9,31 @@ type Props = {};
 export default class Home extends Component<Props> {
   props: Props;
 
-  render() {
+  render () {
     return (
       <div className={styles.container}>
         <div className={styles.root_menu_container}>
-          <div className={styles.root_menu_item}>
-            <i className="fas fa-3x fa-clipboard-check" />
-            <br />
-            Checkout
-          </div>
           <Link to={routes.INVENTORY}>
             <div className={styles.root_menu_item}>
-              <i className="fas fa-3x fa-warehouse" />
-              <br />
+              <i className="fas fa-3x fa-warehouse"/>
+              <br/>
               Inventory
             </div>
           </Link>
-          <div className={styles.root_menu_item}>
-            <i className="fas fa-3x fa-flask" />
-            <br />
-            Hive Lab
-          </div>
+          <Link to={routes.WORKBENCH_RENTAL}>
+            <div className={styles.root_menu_item}>
+              <i className="fas fa-3x fa-key"/>
+              <br/>
+              <span>Bench Checkout</span>
+            </div>
+          </Link>
+          <Link to={routes.USER_MANAGEMENT}>
+            <div className={styles.root_menu_item}>
+              <i className="fas fa-3x fa-user"/>
+              <br/>
+              User Info
+            </div>
+          </Link>
         </div>
       </div>
     );

@@ -17,3 +17,10 @@
     font-size: 36px;
   }
 }
+
+.inventorySearchBar {
+  padding-top: 16px;
+  > *:not(:first-child) {
+    margin-left: 20px;
+  }
+}

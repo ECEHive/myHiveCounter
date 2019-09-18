@@ -1,0 +1,19 @@
+.backContainer {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.container {
+  max-width: 1366px;
+  margin: auto;
+  padding: 16px 0;
+}
+
+.inventoryTitle {
+  text-align: center;
+  user-select: none;
+  > h2 {
+    font-size: 36px;
+  }
+}

@@ -2,15 +2,15 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import "~@fortawesome/fontawesome-free/css/all.css";
-@import "./colors.scss";
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import './colors.scss';
 
 body {
   position: relative;
   background: $hive-page-background-color;
   color: $hive-text-dark;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   margin: 0;
 }

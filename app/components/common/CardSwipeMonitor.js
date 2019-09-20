@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 import styles from './CardSwipeMonitor.scss';
 
@@ -9,6 +10,7 @@ type Props = {
 type States = {
   charSequence: string
 };
+
 
 export default class CardSwipeMonitor extends React.PureComponent<
   Props,
@@ -42,6 +44,25 @@ export default class CardSwipeMonitor extends React.PureComponent<
   };
 
   render() {
+    /* These are fake swipe buttons, the ```process.env.NODE_ENV``` controls it
+       not display on production mode (including yarn start)
+    */
+    const fakeSwipe = process.env.NODE_ENV === 'production' ? null :
+      (
+        <div>
+          <br/>
+          <Button type="primary" onClick={() => {
+            this.props.onSwipe(';1570=999999999=00=6017700006685730?')}}>
+            Fake a Swipe
+          </Button>
+          <br /><br />
+          <Button type="primary" onClick={() => {
+            this.props.onSwipe(';1570=YY999999999=00=6017700006685730')}}>
+            Bad Swipe
+          </Button>
+        </div>
+      );
+
     return (
       <div className={styles.cardSwipeBackdrop}>
         <div className={styles.cardSwipeModal}>
@@ -51,6 +72,7 @@ export default class CardSwipeMonitor extends React.PureComponent<
             <div />
             <div />
           </div>
+          {fakeSwipe}
         </div>
       </div>
     );

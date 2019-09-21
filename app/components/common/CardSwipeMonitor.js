@@ -11,7 +11,6 @@ type States = {
   charSequence: string
 };
 
-
 export default class CardSwipeMonitor extends React.PureComponent<
   Props,
   States
@@ -40,6 +39,7 @@ export default class CardSwipeMonitor extends React.PureComponent<
       this.setState({
         charSequence: this.state.charSequence + e.key
       });
+      e.preventDefault();
     }
   };
 
@@ -47,17 +47,26 @@ export default class CardSwipeMonitor extends React.PureComponent<
     /* These are fake swipe buttons, the ```process.env.NODE_ENV``` controls it
        not display on production mode (including yarn start)
     */
-    const fakeSwipe = process.env.NODE_ENV === 'production' ? null :
-      (
+    const fakeSwipe =
+      process.env.NODE_ENV === 'production' ? null : (
         <div>
-          <br/>
-          <Button type="primary" onClick={() => {
-            this.props.onSwipe(';1570=999999999=00=6017700006685730?')}}>
+          <br />
+          <Button
+            type="primary"
+            onClick={() => {
+              this.props.onSwipe(';1570=999999999=00=6017700006685730?');
+            }}
+          >
             Fake a Swipe
           </Button>
-          <br /><br />
-          <Button type="primary" onClick={() => {
-            this.props.onSwipe(';1570=YY999999999=00=6017700006685730')}}>
+          <br />
+          <br />
+          <Button
+            type="primary"
+            onClick={() => {
+              this.props.onSwipe(';1570=YY999999999=00=6017700006685730');
+            }}
+          >
             Bad Swipe
           </Button>
         </div>

@@ -1,7 +1,7 @@
 @import '../../colors.scss';
 
 .cardSwipeBackdrop {
-  position: absolute;
+  position: fixed;
   z-index: 800;
   background: rgba(0, 0, 0, 0.3);
   width: 100%;
@@ -19,7 +19,8 @@
   background: $hive-page-background-color;
   border-radius: 6px;
   box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateZ(0); // translateZ will force chrome to hardware accelerate
+  -webkit-transform: translate(-50%, -50%) translateZ(0);
   padding: 10px 16px;
 }
 

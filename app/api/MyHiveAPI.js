@@ -5,7 +5,10 @@ let baseUrl;
 
 switch (process.env.NODE_ENV) {
   case 'development':
-    baseUrl = 'http://localhost:9000';
+    if (process.env.API_URL)
+      baseUrl = process.env.API_URL;
+    else
+      baseUrl = 'http://localhost:9000';
     break;
   case 'production':
     baseUrl = 'https://my.ecehive.org';

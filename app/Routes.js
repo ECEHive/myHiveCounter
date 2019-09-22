@@ -6,6 +6,7 @@ import HomePage from './containers/HomePage';
 import InventoryPage from './containers/InventoryPage';
 import WorkbenchRentalPage from './containers/WorkbenchRentalPage';
 import UserManagementPage from './containers/UserManagementPage';
+import UserCreationPage from './containers/UserCreationPage';
 
 export default () => (
   <App>
@@ -13,6 +14,7 @@ export default () => (
       <Route path={routes.INVENTORY} component={InventoryPage} />
       <Route path={routes.WORKBENCH_RENTAL} component={WorkbenchRentalPage} />
       <Route path={routes.USER_MANAGEMENT} component={UserManagementPage} />
+      <Route path={routes.USER_CREATION} component={UserCreationPage} />
       <Route path={routes.HOME} component={HomePage} />
     </Switch>
   </App>

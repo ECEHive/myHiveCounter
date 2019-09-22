@@ -14,8 +14,21 @@ switch (process.env.NODE_ENV) {
     baseUrl = '';
     break;
 }
+console.log(`API BASE URL = ${baseUrl}`);
 
-console.log(`BASE URL = ${baseUrl}`);
+export type ResponseObject<DataType> = {
+  code: string,
+  data: DataType,
+  pagination?: PaginationResponse,
+  time: number
+};
+
+export type PaginationResponse = {
+  currentPage: number,
+  pageSize: number,
+  totalItems: number,
+  totalPages: number
+};
 
 export const sharedAxios = Axios.create({
   baseURL: baseUrl,

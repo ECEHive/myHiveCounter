@@ -10,8 +10,10 @@
     "node": true
   },
   "rules": {
+    "no-unused-vars": "off",
     "arrow-parens": ["off"],
     "compat/compat": "error",
+    "lines-between-class-members": "off",
     "consistent-return": "off",
     "comma-dangle": "off",
     "flowtype/boolean-style": ["error", "boolean"],
@@ -62,7 +64,8 @@
     "react/prefer-stateless-function": "off",
     "react/no-unused-prop-types": "off",
     "react/destructuring-assignment": "off",
-    "react/no-access-state-in-setstate": "off"
+    "react/no-access-state-in-setstate": "off",
+    "react/no-multi-comp": "off"
   },
   "plugins": ["flowtype", "import", "promise", "compat", "react"],
   "settings": {

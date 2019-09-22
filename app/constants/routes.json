@@ -2,5 +2,6 @@
   "HOME": "/",
   "INVENTORY": "/inventory",
   "WORKBENCH_RENTAL": "/workbench_rental",
-  "USER_MANAGEMENT": "/user_management"
+  "USER_MANAGEMENT": "/user/manage",
+  "USER_CREATION": "/user/create"
 }

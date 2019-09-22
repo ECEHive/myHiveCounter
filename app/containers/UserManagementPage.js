@@ -6,6 +6,7 @@ import routes from '../constants/routes.json';
 import CardSwipeMonitor from '../components/common/CardSwipeMonitor';
 import ConditionalRender from '../components/common/ConditionalRender';
 import LoadingOverlay from '../components/common/LoadingOverlay';
+import MyHiveAPI from '../api/MyHiveAPI';
 
 type Props = {};
 
@@ -36,6 +37,7 @@ export default class UserManagementPage extends React.Component<Props, State> {
   };
 
   render() {
+    MyHiveAPI.user.findUserByUniqueIdentifier('Yeet');
     return (
       <div>
         <div className="backButtonContainer">

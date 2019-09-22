@@ -15,6 +15,11 @@ type Props = {
 };
 
 class UserCreationPage extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    this.checkValidCurrentUser();
+  }
+
   componentDidMount(): void {
     this.checkValidCurrentUser();
   }
@@ -30,6 +35,9 @@ class UserCreationPage extends React.Component<Props> {
   }
 
   render() {
+    console.log(
+      `Rendering userCreate Page with user:${this.props.currentUser}`
+    );
     return (
       <div>
         <div className="backButtonContainer">

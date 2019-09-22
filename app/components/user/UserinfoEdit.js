@@ -27,10 +27,23 @@ class UserInfoForm extends React.Component {
       }
     };
     const { getFieldDecorator } = this.props.form;
+    console.log(this.props.user);
+    const {
+      GTEmail,
+      FirstName,
+      MiddleName,
+      LastName,
+      GTUsername,
+      PersonalEmail
+    } = this.props.user;
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item label="Unique ID">
+          <Input disabled value={this.props.user.UniqueIdentifier} />
+        </Form.Item>
         <Form.Item label="GT Email">
           {getFieldDecorator('GTEmail', {
+            initialValue: GTEmail,
             rules: [
               {
                 type: 'email',
@@ -45,6 +58,7 @@ class UserInfoForm extends React.Component {
         </Form.Item>
         <Form.Item label="Preferred Email">
           {getFieldDecorator('PersonalEmail', {
+            initialValue: PersonalEmail,
             rules: [
               {
                 type: 'email',
@@ -55,6 +69,7 @@ class UserInfoForm extends React.Component {
         </Form.Item>
         <Form.Item label="GT Username">
           {getFieldDecorator('GTUsername', {
+            initialValue: GTUsername,
             rules: [
               {
                 required: true,
@@ -65,6 +80,7 @@ class UserInfoForm extends React.Component {
         </Form.Item>
         <Form.Item label="First Name">
           {getFieldDecorator('FirstName', {
+            initialValue: FirstName,
             rules: [
               {
                 required: true,
@@ -74,10 +90,13 @@ class UserInfoForm extends React.Component {
           })(<Input placeholder="George" />)}
         </Form.Item>
         <Form.Item label="Middle Name">
-          {getFieldDecorator('GTUsername', {})(<Input placeholder="P." />)}
+          {getFieldDecorator('GTUsername', {
+            initialValue: MiddleName
+          })(<Input placeholder="P." />)}
         </Form.Item>
         <Form.Item label="Last Name">
           {getFieldDecorator('LastName', {
+            initialValue: LastName,
             rules: [
               {
                 required: true,
@@ -85,11 +104,6 @@ class UserInfoForm extends React.Component {
               }
             ]
           })(<Input placeholder="Burdell" />)}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked'
-          })(<Checkbox>I have read the ___HIVE_AGREEMENT____</Checkbox>)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
@@ -110,10 +124,9 @@ type Props = {
 
 export default class UserinfoEdit extends React.Component<Props> {
   render() {
-    console.log(this.props.currentUser);
     return (
       <div>
-        <UserFormInstance />
+        <UserFormInstance user={this.props.currentUser} />
       </div>
     );
   }

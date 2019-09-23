@@ -11,10 +11,15 @@ import UserinfoEdit from '../components/user/UserinfoEdit';
 type Props = {
   currentUser: HiveUserEntity,
   history: History,
+  refreshCurrentUser?: boolean,
   setCurrentUser: HiveUserEntity => void
 };
 
 class UserCreationPage extends React.Component<Props> {
+  static defaultProps = {
+    refreshCurrentUser: false
+  };
+
   constructor(props) {
     super(props);
     this.checkValidCurrentUser();
@@ -30,7 +35,6 @@ class UserCreationPage extends React.Component<Props> {
 
   checkValidCurrentUser() {
     if (this.props.currentUser === null) {
-      this.props.setCurrentUser(null);
       this.props.history.replace(routes.USER_MANAGEMENT);
     }
   }

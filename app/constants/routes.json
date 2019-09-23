@@ -3,5 +3,6 @@
   "INVENTORY": "/inventory",
   "WORKBENCH_RENTAL": "/workbench_rental",
   "USER_MANAGEMENT": "/user/manage",
-  "USER_CREATION": "/user/create"
+  "USER_CREATION": "/user/create",
+  "USER_INFO": "/user/info"
 }

@@ -45,7 +45,8 @@ class UserManagementPage extends React.Component<Props, State> {
           sha256HexDigest
         );
         if (userFetch.pagination.totalItems > 0) {
-          console.log('User Found');
+          this.props.setCurrentUser(userFetch.data[0]);
+          this.props.history.push(routes.USER_INFO);
         } else {
           const confirm = await Swal.fire({
             title: `New user (GTID: ${gtid}) found`,

@@ -119,7 +119,8 @@ class UserInfoForm extends React.Component {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            <i className="fa fa-save fa-space-right" />
+            Save
           </Button>
         </Form.Item>
       </Form>

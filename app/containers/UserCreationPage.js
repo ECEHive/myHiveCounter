@@ -11,13 +11,14 @@ import UserinfoEdit from '../components/user/UserinfoEdit';
 type Props = {
   currentUser: HiveUserEntity,
   history: History,
-  refreshCurrentUser?: boolean,
+  refreshCurrentUser: () => void,
+  editComplete?: () => void,
   setCurrentUser: HiveUserEntity => void
 };
 
 class UserCreationPage extends React.Component<Props> {
   static defaultProps = {
-    refreshCurrentUser: false
+    editComplete: () => {}
   };
 
   constructor(props) {
@@ -39,7 +40,12 @@ class UserCreationPage extends React.Component<Props> {
     }
   }
 
-  userCreationComplete = () => {
+  userCreationComplete = async () => {
+    if (this.props.editComplete) {
+      this.props.editComplete();
+    }
+    console.log(this.props);
+    await this.props.refreshCurrentUser();
     this.props.history.goBack();
   };
 

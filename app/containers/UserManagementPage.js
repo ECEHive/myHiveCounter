@@ -39,7 +39,7 @@ class UserManagementPage extends React.Component<Props, State> {
       });
       // Compute SHA256
       const sha256HexDigest = new Shajs('sha256').update(gtid).digest('hex');
-      console.log(`GTID Digest: ${sha256HexDigest}`);
+      console.log(`GTID (${gtid})Digest: ${sha256HexDigest}`);
       try {
         const userFetch = await MyHiveAPI.user.findUserByUniqueIdentifier(
           sha256HexDigest
@@ -48,7 +48,7 @@ class UserManagementPage extends React.Component<Props, State> {
           console.log('User Found');
         } else {
           const confirm = await Swal.fire({
-            title: 'No user found',
+            title: `New user (GTID: ${gtid}) found`,
             text: 'Do you want to create a new user?',
             type: 'info',
             showCancelButton: true,

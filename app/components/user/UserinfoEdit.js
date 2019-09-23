@@ -1,8 +1,21 @@
 import React from 'react';
 import { Form, Button, Input, Checkbox } from 'antd';
+import Swal from 'sweetalert2';
 import type { HiveUserEntity } from '../../api/user';
+import ConditionalRender from '../common/ConditionalRender';
+import LoadingOverlay from '../common/LoadingOverlay';
+import MyHiveAPI from '../../api/MyHiveAPI';
 
 class UserInfoForm extends React.Component {
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.form.validateFields((err, value) => {
+      if (!err) {
+        this.props.onSubmit(value);
+      }
+    });
+  };
+
   render() {
     const formItemLayout = {
       labelCol: {
@@ -27,7 +40,6 @@ class UserInfoForm extends React.Component {
       }
     };
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.user);
     const {
       GTEmail,
       FirstName,
@@ -73,10 +85,10 @@ class UserInfoForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: 'Please enter your GTUsernmae'
+                message: 'Please enter your GT Usernmae'
               }
             ]
-          })(<Input placeholder="burdell33" />)}
+          })(<Input placeholder="burdell33" type="text" />)}
         </Form.Item>
         <Form.Item label="First Name">
           {getFieldDecorator('FirstName', {
@@ -90,7 +102,7 @@ class UserInfoForm extends React.Component {
           })(<Input placeholder="George" />)}
         </Form.Item>
         <Form.Item label="Middle Name">
-          {getFieldDecorator('GTUsername', {
+          {getFieldDecorator('MiddleName', {
             initialValue: MiddleName
           })(<Input placeholder="P." />)}
         </Form.Item>
@@ -123,10 +135,42 @@ type Props = {
 };
 
 export default class UserinfoEdit extends React.Component<Props> {
+  state = {
+    submitting: false
+  };
+
+  onSubmitUserEdit = async value => {
+    console.log(value);
+    this.setState({ submitting: true });
+    try {
+      const result = await MyHiveAPI.user.upsertUserWithUniqueIdentifier(
+        this.props.currentUser.UniqueIdentifier,
+        value
+      );
+      await Swal.fire({
+        type: 'success',
+        title: 'User saved!'
+      });
+    } catch (e) {
+      await Swal.fire({
+        type: 'error',
+        title: 'Whoops, Something went wrong'
+      });
+    } finally {
+      this.setState({ submitting: false });
+    }
+  };
+
   render() {
     return (
       <div>
-        <UserFormInstance user={this.props.currentUser} />
+        <ConditionalRender render={this.state.submitting}>
+          <LoadingOverlay />
+        </ConditionalRender>
+        <UserFormInstance
+          user={this.props.currentUser}
+          onSubmit={this.onSubmitUserEdit}
+        />
       </div>
     );
   }

@@ -29,5 +29,21 @@ export default {
     } catch (e) {
       throw e;
     }
+  },
+
+  // Upsert: Update + Insert
+  async upsertUserWithUniqueIdentifier(
+    uniqueIdentifier: string,
+    user: HiveUserEntity
+  ): ResponseObject<HiveUserEntity> {
+    try {
+      const result = await sharedAxios.put('/user/upsert', {
+        UniqueIdentifier: uniqueIdentifier,
+        patch: user
+      });
+      return result.data;
+    } catch (e) {
+      throw e;
+    }
   }
 };

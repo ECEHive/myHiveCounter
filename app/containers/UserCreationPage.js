@@ -36,7 +36,7 @@ class UserCreationPage extends React.Component<Props> {
   }
 
   userCreationComplete = () => {
-    this.props.history.back();
+    this.props.history.goBack();
   };
 
   render() {

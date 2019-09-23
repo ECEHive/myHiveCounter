@@ -131,7 +131,8 @@ const UserFormInstance = Form.create({})(UserInfoForm);
 
 type Props = {
   currentUser: HiveUserEntity,
-  setCurrentUser: HiveUserEntity => void
+  setCurrentUser: HiveUserEntity => void,
+  onComplete: () => void
 };
 
 export default class UserinfoEdit extends React.Component<Props> {
@@ -151,6 +152,9 @@ export default class UserinfoEdit extends React.Component<Props> {
         type: 'success',
         title: 'User saved!'
       });
+      if (this.props.onComplete) {
+        this.props.onComplete();
+      }
     } catch (e) {
       await Swal.fire({
         type: 'error',

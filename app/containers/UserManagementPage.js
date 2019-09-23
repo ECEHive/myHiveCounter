@@ -61,7 +61,7 @@ class UserManagementPage extends React.Component<Props, State> {
             const user = new HiveUserEntity();
             user.UniqueIdentifier = sha256HexDigest;
             this.props.setCurrentUser(user);
-            this.props.history.push(routes.USER_CREATION);
+            this.props.history.replace(routes.USER_CREATION);
           }
         }
       } catch (e) {

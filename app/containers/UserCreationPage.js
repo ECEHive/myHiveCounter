@@ -30,14 +30,16 @@ class UserCreationPage extends React.Component<Props> {
 
   checkValidCurrentUser() {
     if (this.props.currentUser === null) {
+      this.props.setCurrentUser(null);
       this.props.history.replace(routes.USER_MANAGEMENT);
     }
   }
 
+  userCreationComplete = () => {
+    this.props.history.back();
+  };
+
   render() {
-    console.log(
-      `Rendering userCreate Page with user:${this.props.currentUser}`
-    );
     return (
       <div>
         <div className="backButtonContainer">
@@ -49,6 +51,7 @@ class UserCreationPage extends React.Component<Props> {
           <UserinfoEdit
             currentUser={this.props.currentUser}
             setCurrentUser={this.props.setCurrentUser}
+            onComplete={this.userCreationComplete}
           />
         </PageContainer>
       </div>

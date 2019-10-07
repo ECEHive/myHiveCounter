@@ -1,14 +1,13 @@
 import Axios from 'axios';
 import userAPI from './user';
+import inventory from './inventory';
 
 let baseUrl;
 
 switch (process.env.NODE_ENV) {
   case 'development':
-    if (process.env.API_URL)
-      baseUrl = process.env.API_URL;
-    else
-      baseUrl = 'http://localhost:9000';
+    if (process.env.API_URL) baseUrl = process.env.API_URL;
+    else baseUrl = 'http://localhost:9000';
     break;
   case 'production':
     baseUrl = 'https://my.ecehive.org';
@@ -40,5 +39,6 @@ export const sharedAxios = Axios.create({
 sharedAxios.defaults.adapter = require('axios/lib/adapters/http');
 
 export default {
-  user: userAPI
+  user: userAPI,
+  inventory
 };

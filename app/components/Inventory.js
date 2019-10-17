@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Button, Col, Row, Input, Table } from 'antd';
+import { Button, Col, Row, Input, Table, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from './inventory.scss';
 import routes from '../constants/routes';
 import MyHiveAPI from '../api/MyHiveAPI';
+import InventoryCreateItemModal from './inventory/InventoryCreateItemModal';
 
 const { Search } = Input;
 
@@ -111,6 +112,7 @@ export default class Inventory extends React.Component {
             />
           </Col>
         </Row>
+        <InventoryCreateItemModal/>
       </div>
     );
   }

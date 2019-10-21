@@ -18,29 +18,52 @@ import { Modal, Form, Input, Radio, InputNumber } from 'antd';
 "ItemLocation": ""
  */
 
-class InventoryCreateItemModal extends React.Component {
+type Props = {
+  visible: boolean,
+  onCancel: () => void,
+  onCreate: () => void,
+  form: any
+};
+
+class InventoryCreateItemModal extends React.Component<Props> {
   render() {
     const { visible, onCancel, onCreate, form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <Modal visible maskClosable={false} width="80%">
+      <Modal
+        visible={visible}
+        onCancel={onCancel}
+        onOk={onCreate}
+        maskClosable={false}
+        width="80%"
+      >
         <Form layout="vertical">
           <Form.Item label="Item Name">
             {getFieldDecorator('ItemName', {
-              rules: [{ required: true, message: 'Name is required' }],
+              rules: [{ required: true, message: 'Name is required' }]
             })(<Input />)}
           </Form.Item>
           <Form.Item label="Name on Label">
-            {getFieldDecorator('ItemLabel')(<Input />)}
+            {getFieldDecorator('ItemLabel', {
+              rules: [
+                {
+                  max: 20,
+                  message: 'Label must be shorter than 20 characters'
+                }
+              ]
+            })(<Input />)}
           </Form.Item>
           <Form.Item label="Description">
-            {getFieldDecorator('ItemDescription')(<Input type="textarea" />)}
+            {getFieldDecorator('ItemDescription')(<Input.TextArea />)}
           </Form.Item>
           <Form.Item label="Extra Parameters">
-            {getFieldDecorator('ItemParameters')(<Input type="textarea" />)}
+            {getFieldDecorator('ItemParameters')(<Input.TextArea />)}
+          </Form.Item>
+          <Form.Item label="Item Currently in Stock">
+            {getFieldDecorator('ItemCountInStock')(<InputNumber min={0} />)}
           </Form.Item>
           <Form.Item label="Item Total Stock">
-            {getFieldDecorator('ItemCount')(<InputNumber min={0}/>)}
+            {getFieldDecorator('ItemCount')(<InputNumber min={0} />)}
           </Form.Item>
         </Form>
       </Modal>

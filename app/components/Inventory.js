@@ -45,13 +45,19 @@ export default class Inventory extends React.Component {
   state = {
     loading: true,
     inventoryQueryResult: [],
-    inventoryQueryPagination: null
+    inventoryQueryPagination: null,
+    formRef: null
+  };
+
+  saveFormRef = formRef => {
+    this.setState({ formRef });
   };
 
   async fetchInitialInventoryData(page = 0) {
     this.setState({
       loading: true
     });
+    console.log('fetching page ', page);
     const data = await MyHiveAPI.inventory.listInventoryItemClass(page);
     this.setState({
       inventoryQueryResult: data.data,
@@ -60,11 +66,15 @@ export default class Inventory extends React.Component {
     });
   }
 
+  changePage = page => {
+    this.fetchInitialInventoryData(page.current - 1);
+  };
+
   render() {
     const paginationConfig = {
-      current: this.state.inventoryQueryPagination?.current,
+      current: this.state.inventoryQueryPagination?.currentPage + 1,
       pageSize: this.state.inventoryQueryPagination?.pageSize,
-      total: this.state.inventoryQueryPagination?.total
+      total: this.state.inventoryQueryPagination?.totalItems
     };
 
     return (
@@ -109,10 +119,11 @@ export default class Inventory extends React.Component {
               dataSource={this.state.inventoryQueryResult}
               rowKey="id"
               pagination={paginationConfig}
+              onChange={this.changePage}
             />
           </Col>
         </Row>
-        <InventoryCreateItemModal/>
+        <InventoryCreateItemModal wrappedComponentRef={this.saveFormRef} />
       </div>
     );
   }

@@ -27,12 +27,12 @@ export type IHiveInventoryItemClassTag = {
 export default {
   async listInventoryItemClass(
     page: number = 0,
-    pageSize: number = 100
+    pageSize: number = 20
   ): Promise<ResponseObject<IHiveInventoryClass[]>> {
     const data = await sharedAxios.get('/inventory/class/list', {
       params: {
         page,
-        pageSize
+        page_size: pageSize
       }
     });
     return data.data;

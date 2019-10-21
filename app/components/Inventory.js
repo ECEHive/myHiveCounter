@@ -46,11 +46,12 @@ export default class Inventory extends React.Component {
     loading: true,
     inventoryQueryResult: [],
     inventoryQueryPagination: null,
-    formRef: null
+    showCreateForm: false
   };
+  formRef = null;
 
   saveFormRef = formRef => {
-    this.setState({ formRef });
+    this.formRef = formRef;
   };
 
   async fetchInitialInventoryData(page = 0) {
@@ -68,6 +69,23 @@ export default class Inventory extends React.Component {
 
   changePage = page => {
     this.fetchInitialInventoryData(page.current - 1);
+  };
+
+  onCreateFormSubmit = () => {
+    const { form } = this.formRef.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return null;
+      }
+      console.log(values);
+    });
+  };
+
+  onCreateFormCancel = () => {
+    this.setState({
+      showCreateForm: false
+    });
+    this.formRef.props.form.resetFields();
   };
 
   render() {
@@ -99,7 +117,14 @@ export default class Inventory extends React.Component {
             />
           </Col>
           <Col span={4}>
-            <Button type="primary" icon="plus" size="large">
+            <Button
+              type="primary"
+              icon="plus"
+              size="large"
+              onClick={() => {
+                this.setState({ showCreateForm: true });
+              }}
+            >
               Add Item
             </Button>
           </Col>
@@ -123,7 +148,12 @@ export default class Inventory extends React.Component {
             />
           </Col>
         </Row>
-        <InventoryCreateItemModal wrappedComponentRef={this.saveFormRef} />
+        <InventoryCreateItemModal
+          wrappedComponentRef={this.saveFormRef}
+          visible={this.state.showCreateForm}
+          onCancel={this.onCreateFormCancel}
+          onCreate={this.onCreateFormSubmit}
+        />
       </div>
     );
   }

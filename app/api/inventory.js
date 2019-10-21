@@ -25,6 +25,14 @@ export type IHiveInventoryItemClassTag = {
 };
 
 export default {
+  async enumCountType(): Promise<ResponseObject<any>> {
+    const data = await sharedAxios.get('/inventory/class/enum/count_types');
+    return data.data;
+  },
+  async enumCheckoutModes(): Promise<ResponseObject<any>> {
+    const data = await sharedAxios.get('/inventory/class/enum/checkout_modes');
+    return data.data;
+  },
   async listInventoryItemClass(
     page: number = 0,
     pageSize: number = 20

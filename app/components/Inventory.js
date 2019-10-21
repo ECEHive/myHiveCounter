@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button, Col, Row, Input, Table, Modal } from 'antd';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import styles from './inventory.scss';
 import routes from '../constants/routes';
 import MyHiveAPI from '../api/MyHiveAPI';
@@ -73,11 +74,31 @@ export default class Inventory extends React.Component {
 
   onCreateFormSubmit = () => {
     const { form } = this.formRef.props;
-    form.validateFields((err, values) => {
+    form.validateFields(async (err, values) => {
       if (err) {
         return null;
       }
       console.log(values);
+      try {
+        const result = await MyHiveAPI.inventory.upsertInventoryClass(values);
+        const swalResult = Swal.fire({
+          type: 'success',
+          timer: 3000,
+          titleText: 'Added'
+        });
+        await this.fetchInitialInventoryData();
+        form.resetFields();
+        this.setState({
+          showCreateForm: false
+        });
+        await swalResult;
+      } catch (e) {
+        Swal.fire({
+          type: 'error',
+          titleText: 'Something went wrong, check your input?',
+          text: `Detail:\n${e}`
+        });
+      }
     });
   };
 

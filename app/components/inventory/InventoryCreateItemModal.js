@@ -38,10 +38,10 @@ class InventoryCreateItemModal extends React.Component<Props> {
   };
 
   fetchEnumValues = async () => {
-    const val = await MyHiveAPI.inventory.enumCountType();
+    const enumCountType = await MyHiveAPI.inventory.enumCountType();
     const checkoutType = await MyHiveAPI.inventory.enumCheckoutModes();
     this.setState({
-      countTypes: Object.entries(val.data).map(ent => ({
+      countTypes: Object.entries(enumCountType.data).map(ent => ({
         key: parseInt(ent[0], 10),
         value: ent[1]
       })),
@@ -86,7 +86,13 @@ class InventoryCreateItemModal extends React.Component<Props> {
             {getFieldDecorator('ItemParameters')(<Input.TextArea />)}
           </Form.Item>
           <Form.Item label="Item Counting Mode">
-            {getFieldDecorator('ItemCountingType')(
+            {getFieldDecorator('ItemCountingType', {
+              rules: [
+                {
+                  required: true
+                }
+              ]
+            })(
               <Radio.Group>
                 {this.state.countTypes.map(e => (
                   <Radio key={e.key} value={e.key}>
@@ -103,7 +109,13 @@ class InventoryCreateItemModal extends React.Component<Props> {
             {getFieldDecorator('ItemCount')(<InputNumber min={0} />)}
           </Form.Item>
           <Form.Item label="Item Checkout Mode">
-            {getFieldDecorator('ItemCheckoutMode')(
+            {getFieldDecorator('ItemCheckoutMode', {
+              rules: [
+                {
+                  required: true
+                }
+              ]
+            })(
               <Radio.Group>
                 {this.state.checkoutModes.map(e => (
                   <Radio key={e.key} value={e.key}>

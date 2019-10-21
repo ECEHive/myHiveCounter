@@ -25,6 +25,19 @@ export type IHiveInventoryItemClassTag = {
 };
 
 export default {
+  async upsertInventoryClass(
+    patch: IHiveInventoryClass
+  ): Promise<ResponseObject<IHiveInventoryClass>> {
+    const yeet = patch;
+    if (!patch || !patch.ItemName) {
+      throw new Error('null patch is not allowed');
+    }
+    if (!patch.ItemLabel) {
+      yeet.ItemLabel = patch.ItemName.substring(0, 20);
+    }
+    const data = await sharedAxios.put('/inventory/class/upsert', yeet);
+    return data.data;
+  },
   async enumCountType(): Promise<ResponseObject<any>> {
     const data = await sharedAxios.get('/inventory/class/enum/count_types');
     return data.data;

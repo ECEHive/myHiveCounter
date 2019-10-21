@@ -36,6 +36,18 @@ export const sharedAxios = Axios.create({
   baseURL: baseUrl,
   timeout: 5000
 });
+sharedAxios.interceptors.response.use(
+  suc => suc,
+  err =>
+    // eslint-disable-next-line prefer-promise-reject-errors
+    Promise.reject(
+      new Error(
+        `Error with code ${err.response.status}, LogID: ${
+          err.response.headers['spec-log-id']
+        }`
+      )
+    )
+);
 sharedAxios.defaults.adapter = require('axios/lib/adapters/http');
 
 export default {

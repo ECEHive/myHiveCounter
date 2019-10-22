@@ -7,6 +7,7 @@ import styles from './inventory.scss';
 import routes from '../constants/routes';
 import MyHiveAPI from '../api/MyHiveAPI';
 import InventoryCreateItemModal from './inventory/InventoryCreateItemModal';
+import InventoryDetailModal from './inventory/InventoryDetailModal';
 
 const { Search } = Input;
 
@@ -175,6 +176,7 @@ export default class Inventory extends React.Component {
           onCancel={this.onCreateFormCancel}
           onCreate={this.onCreateFormSubmit}
         />
+        <InventoryDetailModal visible={true}/>
       </div>
     );
   }

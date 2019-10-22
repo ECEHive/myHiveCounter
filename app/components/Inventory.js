@@ -7,6 +7,7 @@ import styles from './inventory.scss';
 import routes from '../constants/routes';
 import MyHiveAPI from '../api/MyHiveAPI';
 import InventoryCreateItemModal from './inventory/InventoryCreateItemModal';
+import CheckoutModeDisplay from './inventory/CheckoutModeDisplay';
 import InventoryDetailModal from './inventory/InventoryDetailModal';
 
 const { Search } = Input;
@@ -21,16 +22,19 @@ const InventoryColumns = [
     dataIndex: 'ItemName'
   },
   {
-    title: 'Total',
-    dataIndex: 'ItemCount'
-  },
-  {
     title: 'In Stock',
     dataIndex: 'ItemCountInStock'
   },
   {
+    title: 'Total',
+    dataIndex: 'ItemCount'
+  },
+  {
     title: 'Checkout Style',
-    dataIndex: 'ItemCheckoutMode'
+    dataIndex: 'ItemCheckoutMode',
+    render(data) {
+      return <CheckoutModeDisplay value={data}/>
+    }
   },
   {
     title: 'Location',

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Col, Row, Input, Table, Modal } from 'antd';
+import { Button, Col, Row, Input, Table, Modal, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import styles from './inventory.scss';
@@ -9,40 +9,36 @@ import MyHiveAPI from '../api/MyHiveAPI';
 import InventoryCreateItemModal from './inventory/InventoryCreateItemModal';
 import CheckoutModeDisplay from './inventory/CheckoutModeDisplay';
 import InventoryDetailModal from './inventory/InventoryDetailModal';
+import type { IHiveInventoryClass } from '../api/inventory';
 
 const { Search } = Input;
+const fs = require('fs');
+const ESCPOSLabelPrinter = require('brother-ql-810w-escpos').default;
 
-const InventoryColumns = [
-  {
-    title: 'ID',
-    dataIndex: 'ItemLabelID'
-  },
-  {
-    title: 'Name',
-    dataIndex: 'ItemName'
-  },
-  {
-    title: 'In Stock',
-    dataIndex: 'ItemCountInStock'
-  },
-  {
-    title: 'Total',
-    dataIndex: 'ItemCount'
-  },
-  {
-    title: 'Checkout Style',
-    dataIndex: 'ItemCheckoutMode',
-    render(data) {
-      return <CheckoutModeDisplay value={data}/>
-    }
-  },
-  {
-    title: 'Location',
-    dataIndex: 'ItemLocation'
-  }
-];
+function onPrintClick(data: IHiveInventoryClass) {
+  const instance = new ESCPOSLabelPrinter();
+
+  instance.setESCPMode();
+  instance.initialize();
+  instance.setLength(200);
+  instance.setFont(ESCPOSLabelPrinter.Font.LetterGothic);
+  instance.setBold();
+  if (data.ItemLabel.length > 12)
+    instance.setSize(65);
+  else
+    instance.setSize(83);
+  instance.setLineFeed(20);
+  instance.setAlignment(ESCPOSLabelPrinter.Alignment.CENTER);
+  instance.addText(`${data.ItemLabel}\n`);
+  instance.code39(`${data.ItemLabelID}`);
+// instance.clearCutAfterPrint()
+  instance.print();
+
+  fs.appendFileSync('/dev/usb/lp0', Buffer.from(instance.encode()))
+}
 
 export default class Inventory extends React.Component {
+
   constructor(params) {
     super(params);
     this.fetchInitialInventoryData();
@@ -55,6 +51,61 @@ export default class Inventory extends React.Component {
     showCreateForm: false
   };
   formRef = null;
+
+  InventoryColumns = [
+    {
+      title: 'ID',
+      dataIndex: 'ItemLabelID'
+    },
+    {
+      title: 'Name',
+      dataIndex: 'ItemName'
+    },
+    {
+      title: 'In Stock',
+      dataIndex: 'ItemCountInStock'
+    },
+    {
+      title: 'Total',
+      dataIndex: 'ItemCount'
+    },
+    {
+      title: 'Checkout Style',
+      dataIndex: 'ItemCheckoutMode',
+      render(data) {
+        return <CheckoutModeDisplay value={data}/>
+      }
+    },
+    {
+      title: 'Location',
+      dataIndex: 'ItemLocation'
+    },
+    {
+      title: 'action',
+      key: 'item_action',
+      render(data, item) {
+        return (
+          <span>
+          <Button type="link" shape="circle"
+                  onClick={() => {
+                    try {
+                      onPrintClick(item);
+                    } catch (e) {
+                      Swal.fire({
+                        type: 'error',
+                        title: 'Oops',
+                        text: 'Double check printer connection',
+                        footer: `${e}`
+                      });
+                    }
+                  }}>
+            <Icon type="printer" />
+          </Button>
+        </span>
+        );
+      }
+    }
+  ];
 
   saveFormRef = formRef => {
     this.formRef = formRef;
@@ -165,7 +216,7 @@ export default class Inventory extends React.Component {
             }}
           >
             <Table
-              columns={InventoryColumns}
+              columns={this.InventoryColumns}
               loading={this.state.loading}
               dataSource={this.state.inventoryQueryResult}
               rowKey="id"
@@ -180,7 +231,7 @@ export default class Inventory extends React.Component {
           onCancel={this.onCreateFormCancel}
           onCreate={this.onCreateFormSubmit}
         />
-        <InventoryDetailModal visible={true}/>
+        <InventoryDetailModal/>
       </div>
     );
   }

@@ -10,7 +10,7 @@ switch (process.env.NODE_ENV) {
     else baseUrl = 'http://localhost:9000';
     break;
   case 'production':
-    baseUrl = 'https://my.ecehive.org';
+    baseUrl = 'http://gt.imsai.dev:8765';
     break;
   default:
     baseUrl = '';
